@@ -15,9 +15,9 @@ window.UNNATI_HEADER_TEMPLATE = `
     <div class="nav-links">
       <a href="index.html" class="__HOME__">Home</a>
       <a href="about.html" class="__ABOUT__">About Us</a>
-      <a href="index.html#pillars" class="__PILLARS__">5 Pillars</a>
+      <a href="pillars.html" class="__PILLARS__">5 Pillars</a>
       <a href="index.html#membership" class="__MEMBERSHIP__">Membership</a>
-      <a href="newsletters.html" class="__NEWSLETTERS__">Newsletters</a>
+      <a href="events.html" class="__EVENTS__">Events</a>
       <a href="contact.html" class="__CONTACT__">Contact Us</a>
       <a href="index.html#membership" class="btn btn-primary" style="color: white; padding: 0.6rem 1.6rem;">Join our Community</a>
     </div>

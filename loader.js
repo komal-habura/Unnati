@@ -8,6 +8,28 @@ function renderSharedMarkup(targetId, html) {
   }
 }
 
+function initializeMobileMenu() {
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const navLinks = document.querySelector('.nav-links');
+
+  if (!mobileMenuBtn || !navLinks || mobileMenuBtn.dataset.bound === 'true') {
+    return;
+  }
+
+  mobileMenuBtn.dataset.bound = 'true';
+  mobileMenuBtn.addEventListener('click', () => {
+    mobileMenuBtn.classList.toggle('active');
+    navLinks.classList.toggle('active');
+  });
+
+  navLinks.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+      mobileMenuBtn.classList.remove('active');
+    });
+  });
+}
+
 function getActiveClass(pageName, targetName) {
   return pageName === targetName ? 'active' : '';
 }
@@ -19,7 +41,7 @@ function buildHeaderMarkup(pageName) {
     .replace('__ABOUT__', getActiveClass(pageName, 'about'))
     .replace('__PILLARS__', '')
     .replace('__MEMBERSHIP__', '')
-    .replace('__NEWSLETTERS__', getActiveClass(pageName, 'newsletters'))
+    .replace('__EVENTS__', getActiveClass(pageName, 'events'))
     .replace('__CONTACT__', getActiveClass(pageName, 'contact'));
 }
 
@@ -32,6 +54,7 @@ function loadSharedMarkup() {
 
   renderSharedMarkup('site-header', headerHtml);
   renderSharedMarkup('site-footer', footerHtml);
+  initializeMobileMenu();
 }
 
 if (document.readyState === 'loading') {
