@@ -56,6 +56,23 @@ body {
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 110px;
+}
+
+[id] {
+  scroll-margin-top: 110px;
+}
+
+section[id]::before,
+header[id]::before,
+div[id]::before,
+main[id]::before,
+article[id]::before {
+  content: '';
+  display: block;
+  height: 110px;
+  margin-top: -110px;
+  visibility: hidden;
 }
 
 a {
