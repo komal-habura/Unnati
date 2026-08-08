@@ -18,7 +18,7 @@
   <!-- Hero Section -->
   <section class="hero" style="min-height: 50vh; padding-top: 100px;">
     <div class="hero-bg">
-      <img src="images/events/youth_kirtan_gathering_1773062782761.png" alt="Youth Gathering Background">
+      <img src="images/events/event_home.jpg" alt="Youth Gathering Background">
     </div>
     <div class="hero-overlay" style="background: linear-gradient(to top, rgba(253,250,248, 1) 0%, rgba(253,250,248, 0.8) 50%, rgba(253,250,248, 0.5) 100%);"></div>
     <div class="container text-center">
@@ -97,7 +97,7 @@
           <h2 class="text-serif" style="color: var(--color-primary); font-size: 2rem; margin-bottom: 0.5rem;">Send a Message</h2>
           <p style="color: var(--color-text-muted); font-size: 1rem; margin-bottom: 2rem;">We truly value your feedback and are dedicated to ensuring you are completely satisfied. We look forward to hearing from you!</p>
           
-          <form style="display: flex; flex-direction: column; gap: 1.2rem;">
+          <form id="contact-form" style="display: flex; flex-direction: column; gap: 1.2rem;">
             <div>
               <label for="name" style="display: block; margin-bottom: 0.5rem; color: var(--color-text-muted); font-weight: 500;">Name *</label>
               <input type="text" id="name" required style="width: 100%; padding: 0.8rem 1rem; border: 1px solid rgba(142, 26, 65, 0.2); border-radius: var(--radius-sm); font-family: inherit; font-size: 1rem; background: var(--color-bg); outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--color-primary)'" onblur="this.style.borderColor='rgba(142,26,65,0.2)'">
@@ -163,6 +163,28 @@
     document.querySelectorAll('.animate-fade-up').forEach(el => {
       observer.observe(el);
     });
+
+    const contactForm = document.getElementById('contact-form');
+
+    if (contactForm) {
+      contactForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const whatsapp = document.getElementById('whatsapp').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        const mailtoSubject = encodeURIComponent(subject || 'Contact from Unnati website');
+        const mailtoBody = encodeURIComponent(
+          `Name: ${name}%0AWhatsApp: ${whatsapp}%0AEmail: ${email}%0A%0AMessage:%0A${message}`
+        );
+
+        const mailtoLink = `mailto:iysgirlschennai@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
+        window.location.href = mailtoLink;
+      });
+    }
   </script>
   <div id="site-footer"></div>
 </body>
