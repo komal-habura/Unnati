@@ -1,0 +1,29 @@
+[
+  {
+    "date": "2026-08-28",
+    "day": "28",
+    "month": "Aug",
+    "title": "Bhajan Clubbing",
+    "location": "Chennai",
+    "description": "High-energy kirtan with a spiritually charged atmosphere",
+    "slug": "bhajan-clubbing"
+  },
+  {
+    "date": "2026-09-06",
+    "day": "06",
+    "month": "Sep",
+    "title": "Youth Masterclass",
+    "location": "Online",
+    "description": "Topic: Overcoming Anxiety",
+    "slug": "youth-masterclass"
+  },
+  {
+    "date": "2026-09-27",
+    "day": "27",
+    "month": "Sep",
+    "title": "Sakhi Circle Gathering",
+    "location": "Chennai",
+    "description": "Local Sakhi Circle meetup",
+    "slug": "sakhi-circle-gathering"
+  }
+]
