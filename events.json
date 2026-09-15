@@ -9,7 +9,7 @@
     "slug": "bhajan-clubbing"
   },
   {
-    "date": "2026-09-06",
+    "date": "2027-09-15",
     "day": "06",
     "month": "Sep",
     "title": "Youth Masterclass",
@@ -19,6 +19,15 @@
   },
   {
     "date": "2026-09-27",
+    "day": "27",
+    "month": "Sep",
+    "title": "Sakhi Circle Gathering",
+    "location": "Chennai",
+    "description": "Local Sakhi Circle meetup",
+    "slug": "sakhi-circle-gathering"
+  },
+  {
+    "date": "2026-09-15",
     "day": "27",
     "month": "Sep",
     "title": "Sakhi Circle Gathering",
