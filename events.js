@@ -64,8 +64,9 @@
     const safeImage = typeof event.image === 'string' ? event.image.trim() : '';
     const img = safeImage || '';
     const tag = event.tag || '';
-    const contact = event.contact || 'Iysgirlschennai@gmail.com';
-    const mailto = 'mailto:' + encodeURIComponent(contact) + '?subject=' + encodeURIComponent('Register for ' + (event.title || 'Event'));
+    
+    const buttonHref = event.registrationLink ? event.registrationLink : '#';
+    const targetAttribute = event.registrationLink ? 'target="_blank"' : '';
 
     const html = `
       <article class="card">
@@ -78,28 +79,68 @@
             📅 <strong>Date:</strong>${dateParts.day} ${dateParts.month || ''} ${dateParts.year || ''}<br>
             ${event.location?`📍 <strong>Venue:</strong> ${event.location}`:''}
           </div>
-          <a class="btn ${event.isPast? 'btn-outline':'btn-primary'}" href="${mailto}">${event.isPast? 'See Recap' : 'Register Now'}</a>
+          <a class="btn ${event.isPast? 'btn-outline':'btn-primary'}" href="${buttonHref}" ${targetAttribute}>${event.isPast? 'See Recap' : 'Register Now'}</a>
         </div>
       </article>`;
 
     return el(html);
   }
 
+  // function categorizeEvents(items){
+  //   const today = new Date();
+  //   today.setHours(0,0,0,0);
+  //   const upcoming = [], current = [], past = [];
+    
+  //   items.forEach(it => {
+  //     const d = new Date(it.date + 'T00:00:00');
+  //     if(isNaN(d.getTime())){ past.push(Object.assign({}, it, { isPast:true })); return; }
+  //     d.setHours(0,0,0,0);
+      
+  //     // Changed > to >= so today's events go directly into upcoming
+  //     if(d.getTime() >= today.getTime()) {
+  //       upcoming.push(it);
+  //     } else {
+  //       past.push(Object.assign({}, it, { isPast:true }));
+  //     }
+  //   });
+    
+  //   // sort upcoming ascending, past descending
+  //   upcoming.sort((a,b)=> new Date(a.date) - new Date(b.date));
+  //   past.sort((a,b)=> new Date(b.date) - new Date(a.date));
+    
+  //   return { upcoming, current, past };
+  // }
+
   function categorizeEvents(items){
     const today = new Date();
     today.setHours(0,0,0,0);
+    
+    // Create our 30-day limit
+    const limitDate = new Date(today);
+    limitDate.setDate(today.getDate() + 30);
+    
     const upcoming = [], current = [], past = [];
+    
     items.forEach(it => {
       const d = new Date(it.date + 'T00:00:00');
       if(isNaN(d.getTime())){ past.push(Object.assign({}, it, { isPast:true })); return; }
       d.setHours(0,0,0,0);
-      if(d.getTime() > today.getTime()) upcoming.push(it);
-      else if(d.getTime() === today.getTime()) current.push(it);
-      else past.push(Object.assign({}, it, { isPast:true }));
+      
+      if(d.getTime() >= today.getTime()) {
+        // Only add to upcoming if it's within the 30-day window
+        if (d.getTime() <= limitDate.getTime()) {
+          upcoming.push(it);
+        }
+      } else {
+        // Less than today goes to past
+        past.push(Object.assign({}, it, { isPast:true }));
+      }
     });
+    
     // sort upcoming ascending, past descending
     upcoming.sort((a,b)=> new Date(a.date) - new Date(b.date));
     past.sort((a,b)=> new Date(b.date) - new Date(a.date));
+    
     return { upcoming, current, past };
   }
 

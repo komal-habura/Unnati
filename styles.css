@@ -2476,3 +2476,7 @@ div[id].grid-3::before,
 .highlight-item {
   background: #fffcf8 !important; /* Matches the top benefit cards */
 }
+
+.feature-left .feature-cta {
+  margin-bottom: -14px !important; 
+}

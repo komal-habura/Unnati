@@ -711,8 +711,17 @@
 
   <!-- Scripts for animations and mobile menu -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-  <script>
-    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQPMjE0d5cPAACn03wxaM-RTXNxcW-JtNdj0r8aBMDyE2zpOjyDBxzA1rDL9ZUzdro6U-9kHxd0sgyg/pub?output=csv';
+<script>
+    // LIVE GOOGLE SHEET URL
+    window.SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQPMjE0d5cPAACn03wxaM-RTXNxcW-JtNdj0r8aBMDyE2zpOjyDBxzA1rDL9ZUzdro6U-9kHxd0sgyg/pub?output=csv';
+    const SHEET_CSV_URL = window.SHEET_CSV_URL || null;
+
+    // FALLBACK DATA (Only used if the live sheet fails)
+    const LOCAL_DUMMY_DATA = [
+      { date: '2026-09-22', title: 'Local Sakhi Meetup', location: 'Chennai' }, 
+      { date: '2026-09-28', title: 'Youth Masterclass', location: 'Online' },   
+      { date: '2026-10-05', title: 'Kirtan Evening', location: 'Main Hall' }
+    ];
 
     // Helper to format dates coming from the Google Sheet
     function parseGoogleDate(s){
@@ -724,9 +733,77 @@
       return null;
     }
 
-    function loadEvents() {
+    function renderCards(dataArray) {
       const container = document.getElementById('upcoming-list');
       if (!container) return;
+
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      // Filter to ONLY show events that are today or in the future
+      let upcomingEvents = dataArray.filter(ev => {
+        if(!ev.date) return false;
+        const d = new Date(ev.date + 'T00:00:00');
+        d.setHours(0,0,0,0);
+        return d.getTime() >= today.getTime(); 
+      });
+
+      // Sort chronologically
+      upcomingEvents.sort((a,b) => new Date(a.date) - new Date(b.date));
+      
+      // Slice out only the top 3 closest upcoming events
+      const top3 = upcomingEvents.slice(0, 3);
+      
+      container.innerHTML = '';
+      
+      if(top3.length === 0) {
+        container.innerHTML = '<p style="padding:1rem; color:var(--color-text-muted);">No upcoming events scheduled right now. Check back soon!</p>';
+        return;
+      }
+
+      // Build the cards and make them clickable
+      top3.forEach(ev => {
+        const d = new Date(ev.date + 'T00:00:00');
+        const day = String(d.getDate()).padStart(2,'0');
+        const month = d.toLocaleString(undefined, { month: 'short' });
+
+        const article = document.createElement('article');
+        article.className = 'event-item';
+        article.setAttribute('tabindex', '0');
+
+        // MAKE IT CLICKABLE: Change cursor and add navigation
+        article.style.cursor = 'pointer';
+        article.addEventListener('click', () => {
+          window.location.href = 'events.html#upcoming-events';
+        });
+        
+        // ACCESSIBILITY: Allow users to hit 'Enter' to navigate
+        article.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            window.location.href = 'events.html#upcoming-events';
+          }
+        });
+
+        const time = document.createElement('time');
+        time.className = 'event-date';
+        time.setAttribute('datetime', ev.date);
+        time.innerHTML = `<span class="event-day">${day}</span><span class="event-month">${month}</span>`;
+
+        const meta = document.createElement('div');
+        meta.className = 'event-meta';
+        meta.innerHTML = `<strong>${ev.title}</strong><div class="event-location">${ev.location}</div>`;
+
+        article.appendChild(time);
+        article.appendChild(meta);
+        container.appendChild(article);
+      });
+    }
+
+    function loadEvents() {
+      if (!SHEET_CSV_URL) {
+        renderCards(LOCAL_DUMMY_DATA);
+        return;
+      }
 
       // Fetch and parse the live Google Sheet
       Papa.parse(SHEET_CSV_URL, {
@@ -734,71 +811,18 @@
         header: true,
         skipEmptyLines: 'greedy',
         complete: function(results) {
-          const today = new Date();
-          today.setHours(0,0,0,0);
-
-          let upcomingEvents = results.data
-            .filter(r => r['Event Name'] || r['Event Date']) // Ignore empty ghost rows
-            .map(r => {
-              const dateIso = parseGoogleDate(r['Event Date'] || r.date || '');
-              
-              let day = '', month = '';
-              if(dateIso) {
-                const d = new Date(dateIso + 'T00:00:00');
-                if(!isNaN(d.getTime())) {
-                  day = String(d.getDate()).padStart(2,'0');
-                  month = d.toLocaleString(undefined, { month: 'short' });
-                }
-              }
-
-              return {
-                date: dateIso,
-                day: day,
-                month: month,
-                title: r['Event Name'] || r.title || '',
-                location: r['Location'] || ''
-              };
-            })
-            // Filter to ONLY show events that are today or in the future
-            .filter(ev => {
-              if(!ev.date) return false;
-              const d = new Date(ev.date + 'T00:00:00');
-              d.setHours(0,0,0,0);
-              return d.getTime() >= today.getTime(); 
-            });
-
-          // Sort chronologically
-          upcomingEvents.sort((a,b) => new Date(a.date) - new Date(b.date));
-          
-          // Slice out only the top 3 closest upcoming events
-          const top3 = upcomingEvents.slice(0, 3);
-          
-          container.innerHTML = '';
-          
-          if(top3.length === 0) {
-            container.innerHTML = '<p style="padding:1rem; color:var(--color-text-muted);">No upcoming events scheduled right now. Check back soon!</p>';
-            return;
-          }
-
-          // Build the cards exactly as they appeared before
-          top3.forEach(ev => {
-            const article = document.createElement('article');
-            article.className = 'event-item';
-            article.setAttribute('tabindex', '0');
-
-            const time = document.createElement('time');
-            time.className = 'event-date';
-            time.setAttribute('datetime', ev.date);
-            time.innerHTML = `<span class="event-day">${ev.day}</span><span class="event-month">${ev.month}</span>`;
-
-            const meta = document.createElement('div');
-            meta.className = 'event-meta';
-            meta.innerHTML = `<strong>${ev.title}</strong><div class="event-location">${ev.location}</div>`;
-
-            article.appendChild(time);
-            article.appendChild(meta);
-            container.appendChild(article);
-          });
+          let formattedData = results.data
+            .filter(r => r['Event Name'] || r['Event Date'])
+            .map(r => ({
+              date: parseGoogleDate(r['Event Date'] || r.date || ''),
+              title: r['Event Name'] || r.title || '',
+              location: r['Location'] || ''
+            }));
+          renderCards(formattedData);
+        },
+        error: function(err) {
+          console.warn("Live sheet failed to load. Falling back to local data.", err);
+          renderCards(LOCAL_DUMMY_DATA);
         }
       });
     }
@@ -848,12 +872,10 @@
         currentSlide = index;
       }
 
-      // Slide track horizontally
       if (sliderTrack) {
         sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
       }
 
-      // Update slide active state
       slides.forEach((slide, idx) => {
         if (idx === currentSlide) {
           slide.classList.add('active');
@@ -862,7 +884,6 @@
         }
       });
 
-      // Update dots active class
       dotSpans.forEach((dot, idx) => {
         if (idx === currentSlide) {
           dot.classList.add('active');
@@ -881,7 +902,6 @@
       dot.addEventListener('click', () => goToSlide(idx));
     });
 
-    // Handle touch/swipe gestures on mobile
     let touchStartX = 0;
     let touchEndX = 0;
 
@@ -897,12 +917,10 @@
     }
 
     function handleSwipe() {
-      const threshold = 50; // min swipe distance in px
+      const threshold = 50; 
       if (touchStartX - touchEndX > threshold) {
-        // Swipe left -> Next
         goToSlide(currentSlide + 1);
       } else if (touchEndX - touchStartX > threshold) {
-        // Swipe right -> Prev
         goToSlide(currentSlide - 1);
       }
     }
@@ -923,6 +941,7 @@
       });
     }
   </script>
+
   <div id="site-footer"></div>
 
   <script src="https://unpkg.com/lucide@latest"></script>
