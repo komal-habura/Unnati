@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=4">
   <meta name="description" content="A Spiritual Growth & Leadership Collective for Young Women by ISKCON Youth Services.">
 </head>
 <body>
@@ -169,7 +169,7 @@
         <div class="events-grid">
           <!-- Feature Card (spans first two columns) -->
           <div class="feature-card">
-            <video id="bg-video" class="feature-bg-video" src="images/events/clubbing.mp4" poster="images/events/event_home.jpg" autoplay muted loop playsinline preload="metadata"></video>
+            <video id="bg-video" class="feature-bg-video" src="images/events/clubbing.mp4"  autoplay muted loop playsinline preload="auto"></video>
 
             <div class="feature-inner">
               <div class="feature-left">
@@ -187,7 +187,10 @@
               
             </div>
 
-            <button id="bg-unmute-btn" class="video-unmute">Unmute</button>
+            <button id="bg-unmute-btn" class="video-unmute" type="button" aria-label="Unmute video" title="Unmute video">
+              <i data-lucide="volume-x" aria-hidden="true"></i>
+              <span class="sr-only">Unmute video</span>
+            </button>
           </div>
 
           <!-- Right: Upcoming Events Sidebar -->
@@ -263,7 +266,7 @@
           <i data-lucide="users-round"></i>
 
           <span>
-            Open to young women (15-28 years)
+            Open to young women (18-30 years)
           </span>
 
         </div>
@@ -909,12 +912,14 @@
 
     if (bgVideo && bgUnmuteBtn) {
       bgUnmuteBtn.addEventListener('click', () => {
-        const isMuted = bgVideo.muted;
-        bgVideo.muted = !isMuted;
-        bgUnmuteBtn.textContent = bgVideo.muted ? 'Unmute' : 'Mute';
-        if (!bgVideo.muted && bgVideo.paused) {
-          bgVideo.play();
-        }
+        bgVideo.muted = !bgVideo.muted;
+        if (!bgVideo.muted) bgVideo.volume = 1;
+        const label = bgVideo.muted ? 'Unmute video' : 'Mute video';
+        bgUnmuteBtn.setAttribute('aria-label', label);
+        bgUnmuteBtn.setAttribute('title', label);
+        bgUnmuteBtn.innerHTML = `<i data-lucide="${bgVideo.muted ? 'volume-x' : 'volume-2'}" aria-hidden="true"></i><span class="sr-only">${label}</span>`;
+        if (window.lucide) lucide.createIcons();
+        if (!bgVideo.muted) bgVideo.play().catch(() => {});
       });
     }
   </script>
