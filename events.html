@@ -25,17 +25,15 @@
       <a href="#current-events">Current Events</a>
       <a href="#past-events">Past Events</a>
     </div>
-
     <section id="upcoming-events" class="section event-section">
       <div class="container">
         <div class="section-title">
-          <span>Upcoming</span>
           <h2>Upcoming Events</h2>
           <p>Plan ahead and join us for these inspiring events coming soon.</p>
         </div>
 
-        <div class="grid-3">
-          <!-- Events will be loaded dynamically from Google Sheets -->
+        <div class="grid-3" id="upcoming-list">
+          <!-- Upcoming events will be rendered here by events.js -->
         </div>
       </div>
     </section>
@@ -43,13 +41,13 @@
     <section id="current-events" class="section event-section section-bg-muted">
       <div class="container">
         <div class="section-title">
-          <span>Now</span>
+          
           <h2>Current Events</h2>
           <p>These programs are happening now — join in while there is still time.</p>
         </div>
 
-        <div class="grid-3">
-          <!-- Events will be loaded dynamically from Google Sheets -->
+        <div class="grid-3" id="current-list">
+          <!-- Current/ongoing events will be rendered here by events.js -->
         </div>
       </div>
     </section>
@@ -57,13 +55,12 @@
     <section id="past-events" class="section event-section">
       <div class="container">
         <div class="section-title">
-          <span>Previously</span>
           <h2>Past Events</h2>
           <p>Look back at our recent celebrations, retreats, and service gatherings.</p>
         </div>
 
-        <div class="grid-3">
-          <!-- Events will be loaded dynamically from Google Sheets -->
+        <div class="grid-3" id="past-list">
+          <!-- Past events will be rendered here by events.js -->
         </div>
       </div>
     </section>
@@ -71,9 +68,85 @@
 
   <div id="site-footer"></div>
 
+  <script>
+    window.EVENTS_DATA = [
+      {
+        date: '2026-08-28',
+        day: '28',
+        month: 'Aug',
+        title: 'Bhajan Clubbing',
+        location: 'Chennai',
+        description: 'High-energy kirtan with a spiritually charged atmosphere',
+        slug: 'bhajan-clubbing'
+      },
+      {
+        date: '2027-09-15',
+        day: '06',
+        month: 'Sep',
+        title: 'Youth Masterclass',
+        location: 'Online',
+        description: 'Topic: Overcoming Anxiety',
+        slug: 'youth-masterclass'
+      },
+      {
+        date: '2026-09-27',
+        day: '27',
+        month: 'Sep',
+        title: 'Sakhi Circle Gathering',
+        location: 'Chennai',
+        description: 'Local Sakhi Circle meetup',
+        slug: 'sakhi-circle-gathering'
+      },
+      {
+        date: '2026-09-15',
+        day: '27',
+        month: 'Sep',
+        title: 'Sakhi Circle Gathering',
+        location: 'Chennai',
+        description: 'Local Sakhi Circle meetup',
+        slug: 'sakhi-circle-gathering'
+      }
+    ];
+  </script>
+
   <script src="partials/header-content.js"></script>
   <script src="partials/footer-content.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+  <script>
+    // Published Google Sheet CSV URL (auto-fetch live updates)
+    window.SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQPMjE0d5cPAACn03wxaM-RTXNxcW-JtNdj0r8aBMDyE2zpOjyDBxzA1rDL9ZUzdro6U-9kHxd0sgyg/pub?output=csv';
+  </script>
+  <script src="events.js"></script>
   <script src="loader.js"></script>
-  <script src="events-data.js"></script>
+  <script>
+    (function(){
+      function syncFeatureToUpcoming(){
+        var upcoming = document.querySelector('.events-sidebar .upcoming-card');
+        var feature = document.querySelector('.feature-card');
+        if(!upcoming || !feature) return;
+        // reset any inline min-height first
+        feature.style.minHeight = '';
+        // measure after paint
+        var h = Math.ceil(upcoming.getBoundingClientRect().height);
+        feature.style.minHeight = h + 'px';
+      }
+
+      var rafId;
+      function schedule(){
+        if(rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(syncFeatureToUpcoming);
+      }
+
+      window.addEventListener('load', schedule);
+      window.addEventListener('resize', function(){
+        clearTimeout(window._evtResizeTimer);
+        window._evtResizeTimer = setTimeout(schedule, 120);
+      });
+      // run after fonts/images
+      if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule).catch(schedule); }
+      // also attempt shortly after load
+      setTimeout(schedule, 400);
+    })();
+  </script>
 </body>
 </html>
