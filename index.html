@@ -714,8 +714,20 @@
   <!-- Scripts for animations and mobile menu -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 <script>
+    function normalizeGoogleSheetCsvUrl(rawUrl) {
+      if (!rawUrl) return null;
+      const trimmed = String(rawUrl).trim();
+      if (!trimmed) return null;
+
+      const match = trimmed.match(/docs\.google\.com\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/i);
+      if (!match) return trimmed;
+
+      const sheetId = match[1];
+      return `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
+    }
+
     // LIVE GOOGLE SHEET URL
-    window.SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQPMjE0d5cPAACn03wxaM-RTXNxcW-JtNdj0r8aBMDyE2zpOjyDBxzA1rDL9ZUzdro6U-9kHxd0sgyg/pub?output=csv';
+    window.SHEET_CSV_URL = normalizeGoogleSheetCsvUrl('https://docs.google.com/spreadsheets/d/1mdEAT1Xu0vln4jwdyBnVGgx4LZyIL3dm6DnQJ9bWGeM/edit?usp=sharing');
     const SHEET_CSV_URL = window.SHEET_CSV_URL || null;
 
     // FALLBACK DATA (Only used if the live sheet fails)
@@ -814,11 +826,18 @@
         skipEmptyLines: 'greedy',
         complete: function(results) {
           let formattedData = results.data
+            .map(row => {
+              const normalized = {};
+              Object.keys(row || {}).forEach(key => {
+                normalized[String(key).trim()] = row[key];
+              });
+              return normalized;
+            })
             .filter(r => r['Event Name'] || r['Event Date'])
             .map(r => ({
               date: parseGoogleDate(r['Event Date'] || r.date || ''),
               title: r['Event Name'] || r.title || '',
-              location: r['Location'] || ''
+              location: r['Location'] || r.location || ''
             }));
           renderCards(formattedData);
         },

@@ -59,14 +59,32 @@
     return null;
   }
 
+  function normalizeImageUrl(image){
+    if(!image) return '';
+    const raw = String(image).trim();
+    if(!raw) return '';
+
+    const driveMatch = raw.match(/(?:drive\.google\.com\/file\/d\/|drive\.google\.com\/open\?id=|id=)([a-zA-Z0-9_-]+)/i) ||
+      raw.match(/(?:drive\.google\.com\/file\/d\/|drive\.google\.com\/open\?id=|id=)([a-zA-Z0-9_-]+)/i);
+
+    if(driveMatch && driveMatch[1]){
+      return `https://drive.google.com/uc?export=view&id=${driveMatch[1]}`;
+    }
+
+    return raw;
+  }
+
   function createCard(event){
     const dateParts = formatDateParts(event.date) || { day: event.day || '', month: event.month || '', year: event.year || '' };
-    const safeImage = typeof event.image === 'string' ? event.image.trim() : '';
+    const safeImage = normalizeImageUrl(typeof event.image === 'string' ? event.image : '');
     const img = safeImage || '';
     const tag = event.tag || '';
-    
-    const buttonHref = event.registrationLink ? event.registrationLink : '#';
-    const targetAttribute = event.registrationLink ? 'target="_blank"' : '';
+
+    const buttonHref = event.isPast
+      ? (event.recapLink || event.registrationLink || '#')
+      : (event.registrationLink || '#');
+    const targetAttribute = buttonHref && buttonHref !== '#' ? 'target="_blank" rel="noopener noreferrer"' : '';
+    const buttonLabel = event.isPast ? 'See Recap' : 'Register Now';
 
     const html = `
       <article class="card">
@@ -79,7 +97,7 @@
             📅 <strong>Date:</strong>${dateParts.day} ${dateParts.month || ''} ${dateParts.year || ''}<br>
             ${event.location?`📍 <strong>Venue:</strong> ${event.location}`:''}
           </div>
-          <a class="btn ${event.isPast? 'btn-outline':'btn-primary'}" href="${buttonHref}" ${targetAttribute}>${event.isPast? 'See Recap' : 'Register Now'}</a>
+          <a class="btn ${event.isPast? 'btn-outline':'btn-primary'}" href="${buttonHref}" ${targetAttribute}>${buttonLabel}</a>
         </div>
       </article>`;
 
@@ -152,8 +170,21 @@
     items.forEach(it=> c.appendChild(createCard(it)));
   }
 
+  function normalizeGoogleSheetCsvUrl(rawUrl){
+    if(!rawUrl) return null;
+    const trimmed = String(rawUrl).trim();
+    if(!trimmed) return null;
+
+    const match = trimmed.match(/docs\.google\.com\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/i);
+    if(!match) return trimmed;
+
+    const sheetId = match[1];
+    return `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
+  }
+
   function useEmbeddedDataOrFetch(){
-    if(Array.isArray(window.EVENTS_DATA) && window.EVENTS_DATA.length){
+    const hasSheetUrl = !!normalizeGoogleSheetCsvUrl(window.SHEET_CSV_URL || null);
+    if(!hasSheetUrl && Array.isArray(window.EVENTS_DATA) && window.EVENTS_DATA.length){
       return Promise.resolve(window.EVENTS_DATA);
     }
     if(window.location.protocol === 'file:'){
@@ -166,7 +197,7 @@
   function load(){
     // Try to fetch from a published Google Sheets CSV first (set SHEET_CSV_URL),
     // otherwise fall back to local events.json.
-    const SHEET_CSV_URL = window.SHEET_CSV_URL || null; // set this globally if you want live sheet updates
+    const SHEET_CSV_URL = normalizeGoogleSheetCsvUrl(window.SHEET_CSV_URL || null); // set this globally if you want live sheet updates
 
     function useData(items){
       const { upcoming, current, past } = categorizeEvents(items);
@@ -181,16 +212,25 @@
         .then(text=>{
           const parsed = Papa.parse(text, { header: true, skipEmptyLines: 'greedy' });
           const rows = parsed.data
+            .map(row => {
+              const normalized = {};
+              Object.keys(row || {}).forEach(key => {
+                normalized[String(key).trim()] = row[key];
+              });
+              return normalized;
+            })
             .filter(r => r['Event Name'] || r['Event Date'] || r.title).map(r => {
             // Accept multiple header names coming from your sheet
             const dateRaw = r['Event Date'] || r['event date'] || r.date || r['Date'] || r['EventDate'];
             const title = r['Event Name'] || r['event name'] || r.title || r['EventName'] || r['Event'];
             const description = r['Description'] || r.description || '';
             const location = r['Location'] || r.location || '';
-            const image = r['Image Url'] || r['Image URL'] || r['image url'] || r.image || '';
+            const image = r['Image URL'] || r['Image Url'] || r['image url'] || r.image || '';
             const theme = r['Theme'] || r.theme || '';
             const type = r['Type'] || r.type || '';
-            const slug = (r['slug'] || r.slug) || (title? title.toString().toLowerCase().trim().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/gi,'') : '');
+            const registrationLink = r['Registration Link'] || r['registration link'] || r.registrationLink || r['RegistrationLink'] || '';
+            const recapLink = r['Recap URL'] || r['recap url'] || r.recapLink || r['RecapURL'] || '';
+            const slug = (r['slug'] || r.slug) || (title ? title.toString().toLowerCase().trim().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/gi,'') : '');
             const dateIso = parseDateToISO(dateRaw) || '';
             return {
               date: dateIso,
@@ -200,6 +240,8 @@
               slug: slug,
               image: image || '',
               tag: theme || type || '',
+              registrationLink: registrationLink || '',
+              recapLink: recapLink || '',
               contact: r['contact'] || r['Contact'] || ''
             };
           });

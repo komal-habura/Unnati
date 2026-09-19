@@ -54,54 +54,23 @@
 
   <div id="site-footer"></div>
 
-  <script>
-    window.EVENTS_DATA = [
-      {
-        date: '2026-09-28',
-        day: '28',
-        month: 'Sep',
-        title: 'Bhajan Clubbing',
-        location: 'Chennai',
-        description: 'High-energy kirtan with a spiritually charged atmosphere',
-        slug: 'bhajan-clubbing',
-        registrationLink: 'https://docs.google.com/forms/d/e/1FAIpQLSecqncSPzTPVsdA6R61VLHZtzParI1RRle8FNqmQXG9zokBEA/viewform?usp=publish-editor'
-      },
-      {
-        date: '2027-09-15',
-        day: '06',
-        month: 'Sep',
-        title: 'Youth Masterclass',
-        location: 'Online',
-        description: 'Topic: Overcoming Anxiety',
-        slug: 'youth-masterclass'
-      },
-      {
-        date: '2026-09-17',
-        day: '27',
-        month: 'Sep',
-        title: 'Sakhi Circle Gathering',
-        location: 'Chennai',
-        description: 'Local Sakhi Circle meetup',
-        slug: 'sakhi-circle-gathering'
-      },
-      {
-        date: '2026-09-15',
-        day: '27',
-        month: 'Sep',
-        title: 'Sakhi Circle Gathering',
-        location: 'Chennai',
-        description: 'Local Sakhi Circle meetup',
-        slug: 'sakhi-circle-gathering'
-      }
-    ];
-  </script>
-
   <script src="partials/header-content.js"></script>
   <script src="partials/footer-content.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
   <script>
-    // Published Google Sheet CSV URL (auto-fetch live updates)
-    window.SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQPMjE0d5cPAACn03wxaM-RTXNxcW-JtNdj0r8aBMDyE2zpOjyDBxzA1rDL9ZUzdro6U-9kHxd0sgyg/pub?output=csv';
+    function normalizeGoogleSheetCsvUrl(rawUrl) {
+      if (!rawUrl) return null;
+      const trimmed = String(rawUrl).trim();
+      if (!trimmed) return null;
+
+      const match = trimmed.match(/docs\.google\.com\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/i);
+      if (!match) return trimmed;
+
+      const sheetId = match[1];
+      return `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
+    }
+
+    window.SHEET_CSV_URL = normalizeGoogleSheetCsvUrl('https://docs.google.com/spreadsheets/d/1mdEAT1Xu0vln4jwdyBnVGgx4LZyIL3dm6DnQJ9bWGeM/edit?usp=sharing');
   </script>
   <script src="events.js"></script>
   <script src="loader.js"></script>
