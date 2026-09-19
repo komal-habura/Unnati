@@ -42,8 +42,27 @@ window.UNNATI_FOOTER_TEMPLATE = `
           </ul>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 Unnati - ISKCON Youth Services. Built with devotion.</p>
+      <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.12); margin-top: 2rem; padding-top: 1.5rem; text-align: center;">
+        <div class="unnati-footer-bottom-row" style="display: flex; align-items: stretch; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
+          <div class="unnati-footer-bottom-copy" style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start; min-width: 260px; flex: 1 1 260px; font-size: 0.95rem; line-height: 1.7; opacity: 0.95; text-align: left;">
+            <div>unnati.iyschennai.com © 2026. All Rights Reserved.</div>
+            <div>Dedicated to ISKCON Founder Acharya</div>
+            <div>HDG A.C. Bhaktivedanta Swami Prabhupada</div>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: center; min-width: 180px; flex: 0 0 auto;">
+            <img src="images/common/spSig.png" alt="Srila Prabhupada signature" style="max-width: 220px; width: min(100%, 220px); height: auto; opacity: 1; display: block;">
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: center; min-width: 260px; flex: 1 1 260px;">
+            <p style="margin: 0; font-size: 0.9rem; line-height: 1.8; letter-spacing: 0.05em; opacity: 0.9; text-align: center;">
+              Hare Krishna Hare Krishna Krishna Krishna Hare Hare<br>
+              Hare Rama Hare Rama Rama Rama Hare Hare
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.8rem; font-size: 0.85rem; opacity: 0.8;">&copy; 2026 Unnati - ISKCON Youth Services. Built with devotion.</div>
       </div>
     </div>
   </footer>
