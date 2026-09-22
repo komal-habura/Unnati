@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=14">
   <meta name="description" content="A Spiritual Growth & Leadership Collective for Young Women by ISKCON Youth Services.">
 </head>
 <body>
@@ -26,13 +26,12 @@
       <div class="hero-content">
         <span class="hero-badge">🌸 Jai Srila Prabhupada 🌸</span>
 
-
         <h1 class="hero-title">
           <span>Progress with Purpose</span>
           UNNATI
         </h1>
         <p class="hero-subtitle">A spiritual growth & leadership collective for young women under <b>ISKCON Youth Services, Chennai</b>. Unnati is not just a youth club—it is a movement of conscious growth, a leadership incubator, and a living sisterhood empowering women to flourish spiritually, personally, and socially.</p>
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <div class="hero-buttons">
           <a href="pillars.html" class="btn btn-primary">Discover the 5 Pillars</a>
           <a href="#membership" class="btn btn-outline" style="background: rgba(255,255,255,0.5);">View Membership</a>
         </div>
@@ -43,7 +42,7 @@
   <!-- Mission & Vision Glass Card -->
   <div class="container">
     <div class="glass-panel mission-card animate-fade-up">
-      <h2 class="text-serif" style="color: var(--color-primary); font-size: 2.2rem;">Our Shared Mission</h2>
+      <h2 class="text-serif" style="color: var(--color-primary); font-size: clamp(1.8rem, 4vw, 2.2rem);">Our Shared Mission</h2>
       <p style="font-size: 1.15rem; color: var(--color-text-muted); max-width: 800px; margin: 0 auto;">To cultivate a dynamic community of spiritually rooted, emotionally strong, and purpose-driven young women who rise together — integrating devotion, self-mastery, leadership, and meaningful contribution.</p>
       
       <div class="mission-grid">
@@ -76,7 +75,7 @@
     <div class="container">
       <div class="text-center animate-fade-up" style="margin-bottom: 2rem;">
         <span class="hero-badge">Core Foundation</span>
-        <h2 class="text-serif" style="font-size: 3rem; color: var(--color-primary);">Our 5 Pillars</h2>
+        <h2 class="text-serif" style="font-size: clamp(2rem, 5vw, 3rem); color: var(--color-primary);">Our 5 Pillars</h2>
         <p style="font-size: 1.2rem; color: var(--color-text-muted);">The vertical pillars through which Unnati operates systemically.</p>
       </div>
 
@@ -160,535 +159,268 @@
   </section>
 
   <!-- Bhajan Clubbing Highlight -->
-  <section class="section" style="padding: 0; margin-bottom: 3rem;">
+  <section class="section" style="padding: 0; margin-bottom: 0;">
     <div class="container">
-      <div class="events-highlight animate-fade-up" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); border-radius: var(--radius-lg); padding: 2.5rem; color: white; position: relative; overflow: hidden; box-shadow: var(--shadow-lg);">
+      <div class="events-highlight animate-fade-up">
 
-        <!-- Decorative bg -->
-        <div style="position: absolute; top: -50px; left: -50px; width: 300px; height: 300px; background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(40px);"></div>
-        <div style="position: absolute; bottom: -50px; right: -50px; width: 250px; height: 250px; background: rgba(212, 175, 55, 0.15); border-radius: 50%; filter: blur(40px);"></div>
+        <div class="feature-card">
+          <video id="bg-video" class="feature-bg-video" src="images/events/clubbing.mp4" autoplay muted loop playsinline preload="auto"></video>
 
-        <div class="events-grid">
-          <!-- Feature Card (spans first two columns) -->
-          <div class="feature-card">
-            <video id="bg-video" class="feature-bg-video" src="images/events/clubbing.mp4"  autoplay muted loop playsinline preload="auto"></video>
-
-            <div class="feature-inner">
-              <div class="feature-left">
-                <span  style = "color: white; margin-bottom: 0.8rem;">🎵 Featured Activity</span>
-                <h2 class="text-serif" style="color: white; font-size: 2.6rem; margin-bottom: 0.6rem;">Bhajan Clubbing</h2>
-                <p style="font-size: 1rem; opacity: 0.95; margin-bottom: 1.2rem; max-width: 520px;">Experience the ecstasy of high-energy Kirtan, vibrant lighting and a spiritually charged atmosphere — a joyful devotional gathering for youth.</p>
-                <div class="feature-meta">
-                  
-                </div>
-                <div class="feature-cta" style="display:flex; gap:1rem; align-items:center;">
-                  <a href="#contact" class="btn btn-primary" style="background: var(--color-accent); color: #3a1f1f; padding: 0.9rem 1.2rem;">Get Notified First</a>
-                </div>
+          <div class="feature-inner">
+            <div class="feature-left">
+              <span style="color: white; margin-bottom: 0.8rem; font-size: 0.95rem;">🎵 Featured Activity</span>
+              <h2 class="text-serif" style="color: white; font-size: clamp(2rem, 4vw, 2.6rem); margin-bottom: 0.6rem;">Bhajan Clubbing</h2>
+              <p style="font-size: 1rem; opacity: 0.95; margin-bottom: 1.2rem; max-width: 520px;">Experience the ecstasy of high-energy Kirtan, vibrant lighting and a spiritually charged atmosphere — a joyful devotional gathering for youth.</p>
+              <div class="feature-cta">
+                <a href="#contact" class="btn btn-primary" style="background: var(--color-accent); color: #3a1f1f; padding: 0.85rem 1.4rem;">Get Notified First</a>
               </div>
-
-              
             </div>
-
-            <button id="bg-unmute-btn" class="video-unmute" type="button" aria-label="Unmute video" title="Unmute video">
-              <i data-lucide="volume-x" aria-hidden="true"></i>
-              <span class="sr-only">Unmute video</span>
-            </button>
           </div>
 
-          <!-- Right: Upcoming Events Sidebar -->
-          <aside class="events-sidebar">
-            <div class="sidebar-card sidebar-feature">
+          <button id="bg-unmute-btn" class="video-unmute" type="button" aria-label="Unmute video" title="Unmute video">
+            <i data-lucide="volume-x" aria-hidden="true"></i>
+            <span class="sr-only">Unmute video</span>
+          </button>
+        </div>
 
+        <!-- Right: Upcoming Events Sidebar -->
+        <aside class="events-sidebar">
+          <div class="upcoming-card" id="upcoming-card">
+            <h3 class="text-serif" style="margin-bottom: 0.8rem;">Upcoming Events</h3>
+            <div id="upcoming-list" class="upcoming-list" aria-live="polite"></div>
+            <a href="events.html" class="btn btn-outline upcoming-viewall" style="margin-top:0.8rem; display:block; text-align:center;">View All Events</a>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================
+       MEMBERSHIP SECTION (BALANCED SIDE-BY-SIDE)
+       ========================= -->
+  <section class="section section-bg-muted unnati-membership" id="membership">
+    <div class="container">
+      <div class="membership-showcase">
+
+        <!-- ================= LEFT COLUMN ================= -->
+        <div class="membership-intro">
+          <div class="membership-label">
+            <span class="label-line"></span>
+            <span class="membership-lotus">
+              <i data-lucide="flower-2"></i>
+            </span>
+            <span class="membership-label-text">MEMBERSHIP</span>
+            <span class="label-line"></span>
+          </div>
+
+          <h2 class="text-serif membership-title">
+            Be a part of Unnati
+          </h2>
+
+          <p class="membership-tagline">
+            Grow <span>•</span> Connect <span>•</span> Contribute
+          </p>
+
+          <!-- Eligibility Pill -->
+          <div class="membership-age">
+            <i data-lucide="users-round"></i>
+            <span>Open to young women (18–30 years)</span>
+          </div>
+
+          <!-- Price / Contribution Card -->
+          <div class="membership-price-card">
+            <div class="price-icon">
+              <i data-lucide="flower-2"></i>
             </div>
-
-            <div class="upcoming-card" id="upcoming-card">
-              <h3 class="text-serif" style="margin-bottom: 0.8rem;">Upcoming Events</h3>
-              <div id="upcoming-list" class="upcoming-list" aria-live="polite">
-                <!-- JS will render events here dynamically -->
+            <div class="price-content">
+              <span class="price-label">ANNUAL CONTRIBUTION</span>
+              <div class="price-row">
+                <span class="price">₹501</span>
+                <span class="per-year">/ year</span>
               </div>
-              <a href="events.html" class="btn btn-outline upcoming-viewall" style="margin-top:0.8rem; display:block; text-align:center;">View All Events</a>
             </div>
-          </aside>
+            <div class="price-divider">
+              <span>✦</span>
+            </div>
+            <p class="price-description">
+              A conscious commitment towards your growth journey.
+            </p>
+            
+            <!-- Join CTA Button -->
+            <a href="https://api.whatsapp.com/send?phone=917418860115&text=Ready%20for%20Unnati%20%F0%9F%94%A5" class="membership-cta">
+              <span>Join Unnati</span>
+              <i data-lucide="arrow-right"></i>
+            </a>
+          </div>
 
+          <!-- Mobile: toggle benefits -->
+          <button class="membership-toggle" aria-expanded="false" aria-controls="membership-benefits">
+            View benefits
+          </button>
+
+          <!-- Micro tagline -->
+          <div class="membership-footer-line">
+            <span class="footer-heart">♡</span>
+            <span>Build yourself</span>
+            <b>•</b>
+            <span>Serve together</span>
+            <b>•</b>
+            <span>Shine in purpose</span>
+          </div>
+        </div>
+
+        <!-- ================= RIGHT COLUMN (8 CARDS WITH SUBTEXT) ================= -->
+        <div class="membership-benefits" id="membership-benefits">
+          <div class="benefits-heading">
+            <span class="benefits-heading-line"></span>
+            <span class="heading-star">✦</span>
+            <h3>MEMBERSHIP BENEFITS</h3>
+            <span class="heading-star">✦</span>
+            <span class="benefits-heading-line"></span>
+          </div>
+
+          <div class="benefits-grid">
+            <!-- 1: Warm Gold -->
+            <div class="benefit-card card-warmgold">
+              <div class="benefit-icon-badge">
+                <i data-lucide="id-card"></i>
+              </div>
+              <h4>Official Membership Card</h4>
+              <p class="benefit-sub">Your personal identity as an Unnati sister.</p>
+            </div>
+
+            <!-- 2: Blush -->
+            <div class="benefit-card card-blush">
+              <div class="benefit-icon-badge">
+                <i data-lucide="sparkles"></i>
+              </div>
+              <h4>Special Archana (2 dates annually)</h4>
+              <p class="benefit-sub">Sacred prayers offered on your chosen milestone days.</p>
+            </div>
+
+            <!-- 3: Mint -->
+            <div class="benefit-card card-mint">
+              <div class="benefit-icon-badge">
+                <i data-lucide="book-open"></i>
+              </div>
+              <h4>Subsidized Workshop Access</h4>
+              <p class="benefit-sub">Subsidized entry to Transformational Growth sessions.</p>
+            </div>
+
+            <!-- 4: Blush -->
+            <div class="benefit-card card-blush">
+              <div class="benefit-icon-badge">
+                <i data-lucide="heart-handshake"></i>
+              </div>
+              <h4>Structured Social Service</h4>
+              <p class="benefit-sub">Active contribution and societal seva opportunities.</p>
+            </div>
+
+            <!-- 5: Warm Gold -->
+            <div class="benefit-card card-warmgold">
+              <div class="benefit-icon-badge">
+                <i data-lucide="sprout"></i>
+              </div>
+              <h4>Eligibility for Leadership Roles</h4>
+              <p class="benefit-sub">Lead, inspire, and coordinate community verticals.</p>
+            </div>
+
+            <!-- 6: Blush -->
+            <div class="benefit-card card-blush">
+              <div class="benefit-icon-badge">
+                <i data-lucide="award"></i>
+              </div>
+              <h4>Participation Certificates</h4>
+              <p class="benefit-sub">Recognize your active growth and milestone efforts.</p>
+            </div>
+
+            <!-- 7: Mint -->
+            <div class="benefit-card card-mint">
+              <div class="benefit-icon-badge">
+                <i data-lucide="mail"></i>
+              </div>
+              <h4>Recommendation Letters</h4>
+              <p class="benefit-sub">Formal endorsement letters based on your active contributions.</p>
+            </div>
+
+            <!-- 8: Mint -->
+            <div class="benefit-card card-mint">
+              <div class="benefit-icon-badge">
+                <i data-lucide="newspaper"></i>
+              </div>
+              <h4>Newsletter & Media Features</h4>
+              <p class="benefit-sub">Share your devotional journey across our newsletter and media.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= FULL-WIDTH BOTTOM TILE ================= -->
+        <div class="membership-highlights-tile">
+          <div class="highlights-tile-header">
+            <span class="tile-lotus"><i data-lucide="flower-2"></i></span>
+            <h3>Unnati is...</h3>
+            <span class="heading-star">✦</span>
+          </div>
+
+          <!-- Inset Dual-Column Box -->
+          <div class="highlights-card-inner">
+            <!-- Left: What we embrace -->
+            <div class="highlights-col">
+              <div class="pill-badge pill-embrace">
+                <span class="pill-icon"><i data-lucide="sprout"></i></span>
+                <span class="pill-title">What we embrace</span>
+              </div>
+              <ul class="unnati-points-list">
+                <li>
+                  <span class="symbol-check">✓</span>
+                  <span>Committed, disciplined, and growth-oriented</span>
+                </li>
+                <li>
+                  <span class="symbol-check">✓</span>
+                  <span>A place where ambition and devotion coexist</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="highlights-divider"></div>
+
+            <!-- Right: What we avoid -->
+            <div class="highlights-col">
+              <div class="pill-badge pill-avoid">
+                <span class="pill-icon"><i data-lucide="ban"></i></span>
+                <span class="pill-title">What we avoid</span>
+              </div>
+              <ul class="unnati-points-list">
+                <li>
+                  <span class="symbol-cross">✕</span>
+                  <span>Not compulsory-heavy</span>
+                </li>
+                <li>
+                  <span class="symbol-cross">✕</span>
+                  <span>Not attendance-policed</span>
+                </li>
+                <li>
+                  <span class="symbol-cross">✕</span>
+                  <span>Not emotionally overwhelming</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
 
       </div>
     </div>
   </section>
 
-<!-- =========================
-     MEMBERSHIP SECTION
-     ========================= -->
-
-<section class="section section-bg-muted unnati-membership" id="membership">
-
-  <div class="container">
-
-    <div class="membership-showcase">
-
-      <!-- ================= LEFT ================= -->
-
-      <div class="membership-intro">
-
-        <div class="membership-label">
-
-          <span class="label-line"></span>
-
-          <span class="membership-lotus">
-            <i data-lucide="flower-2"></i>
-          </span>
-
-          <span class="membership-label-text">
-            MEMBERSHIP
-          </span>
-
-          <span class="label-line"></span>
-
-        </div>
-
-
-        <h2 class="text-serif membership-title">
-          Be a part of Unnati
-        </h2>
-
-
-        <p class="membership-tagline">
-          Grow
-          <span>•</span>
-          Connect
-          <span>•</span>
-          Contribute
-        </p>
-
-
-        <!-- Eligibility -->
-
-        <div class="membership-age">
-
-          <i data-lucide="users-round"></i>
-
-          <span>
-            Open to young women (18-30 years)
-          </span>
-
-        </div>
-
-
-        <!-- Contribution -->
-
-        <div class="membership-price-card">
-
-          <div class="price-icon">
-            <i data-lucide="flower-2"></i>
-          </div>
-
-          <div class="price-content">
-
-            <span class="price-label">
-              ANNUAL CONTRIBUTION
-            </span>
-
-            <div class="price-row">
-
-              <span class="price">
-                ₹501
-              </span>
-
-              <span class="per-year">
-                / year
-              </span>
-
-            </div>
-
-          </div>
-
-
-          <div class="price-divider">
-            <span>✦</span>
-          </div>
-
-
-          <p class="price-description">
-            A conscious commitment towards your growth journey.
-          </p>
-
-        </div>
-
-
-        <!-- Join -->
-
-        <a
-          href="https://api.whatsapp.com/send?phone=917418860115&text=Ready%20for%20Unnati%20%F0%9F%94%A5"
-          class="membership-cta"
-        >
-
-          <span>
-            Join Unnati
-          </span>
-
-          <i data-lucide="arrow-right"></i>
-
-        </a>
-
-        <!-- Mobile: toggle benefits -->
-        <button class="membership-toggle" aria-expanded="false" aria-controls="membership-benefits">
-          View benefits
-        </button>
-
-
-        <!-- Bottom message -->
-
-        <div class="membership-footer-line">
-
-          <span class="footer-heart">♡</span>
-
-          <span>Build yourself</span>
-
-          <b>•</b>
-
-          <span>Serve together</span>
-
-          <b>•</b>
-
-          <span>Shine in purpose</span>
-
-        </div>
-
-      </div>
-
-
-      <!-- ================= RIGHT ================= -->
-
-      <div class="membership-benefits">
-
-
-        <!-- Heading -->
-
-        <div class="benefits-heading">
-
-          <span class="benefits-heading-line"></span>
-
-          <span class="heading-star">✦</span>
-
-          <h3>
-            MEMBERSHIP BENEFITS
-          </h3>
-
-          <span class="heading-star">✦</span>
-
-          <span class="benefits-heading-line"></span>
-
-        </div>
-
-
-        <!-- ================= BENEFITS ================= -->
-
-        <div class="benefits-grid">
-
-
-          <!-- 1 -->
-
-          <div class="benefit-card benefit-peach">
-
-            <div class="benefit-icon">
-              <i data-lucide="credit-card"></i>
-            </div>
-
-            <h4>
-              Official Membership Card
-            </h4>
-
-            <span class="benefit-separator"></span>
-
-            <!-- <p>
-              Your identity as a proud Unnati member.
-            </p> -->
-
-          </div>
-
-
-          <!-- 2 -->
-
-          <div class="benefit-card benefit-purple">
-
-            <div class="benefit-icon">
-              <i data-lucide="hand-heart"></i>
-            </div>
-
-            <h4>
-              Special Archana on two chosen dates annually
-            </h4>
-
-            <span class="benefit-separator"></span>
-
-            <!-- <p>
-              Receive divine blessings on your special days.
-            </p> -->
-
-          </div>
-
-
-          <!-- 3 -->
-
-          <div class="benefit-card benefit-green">
-
-            <div class="benefit-icon">
-              <i data-lucide="book-open"></i>
-            </div>
-
-            <h4>
-              Subsidized access to Transformational Growth Workshops
-            </h4>
-
-            <span class="benefit-separator"></span>
-
-            <!-- <p>
-              Learn, grow and evolve with expert guidance.
-            </p> -->
-
-          </div>
-
-
-          <!-- 4 -->
-
-          <div class="benefit-card benefit-rose">
-
-            <div class="benefit-icon">
-              <i data-lucide="heart-handshake"></i>
-            </div>
-
-            <h4>
-              Structured social contribution opportunities
-            </h4>
-
-            <span class="benefit-separator"></span>
-
-            <!-- <p>
-              Serve with purpose and create a positive impact.
-            </p> -->
-
-          </div>
-
-
-          <!-- 5 -->
-
-          <div class="benefit-card benefit-yellow">
-
-            <div class="benefit-icon">
-              <i data-lucide="sprout"></i>
-            </div>
-
-            <h4>
-              Eligibility for leadership roles
-            </h4>
-
-            <span class="benefit-separator"></span>
-
-            <!-- <p>
-              Lead initiatives and inspire change.
-            </p> -->
-
-          </div>
-
-
-          <!-- 6 -->
-
-          <div class="benefit-card benefit-peach">
-
-            <div class="benefit-icon">
-              <i data-lucide="award"></i>
-            </div>
-
-            <h4>
-              Participation certificates
-            </h4>
-
-            <span class="benefit-separator"></span>
-<!-- 
-            <p>
-              Recognition for your active involvement.
-            </p> -->
-
-          </div>
-
-
-          <!-- 7 -->
-
-          <div class="benefit-card benefit-green">
-
-            <div class="benefit-icon">
-              <i data-lucide="mail"></i>
-            </div>
-
-            <h4>
-              Recommendation letters (based on contribution)
-            </h4>
-
-            <span class="benefit-separator"></span>
-
-            <!-- <p>
-              Build your profile and future opportunities.
-            </p> -->
-
-          </div>
-
-
-          <!-- 8 -->
-
-          <div class="benefit-card benefit-purple">
-
-            <div class="benefit-icon">
-              <i data-lucide="newspaper"></i>
-            </div>
-
-            <h4>
-              Newsletter / social media feature opportunities
-            </h4>
-
-            <span class="benefit-separator"></span>
-
-            <!-- <p>
-              Stay updated and get featured in our community.
-            </p> -->
-
-          </div>
-
-        </div>
-
-
-        <!-- ================= UNNATI IS ================= -->
-
-        <div class="membership-highlights">
-
-          <div class="highlights-title">
-
-            <h3>
-              Unnati is...
-            </h3>
-
-          </div>
-
-
-          <div class="highlights-grid">
-
-
-            <!-- Positive 1 -->
-
-            <div class="highlight-item positive">
-
-              <span class="highlight-icon">
-                ✓
-              </span>
-
-              <p>
-                Committed.<br>
-                Disciplined.<br>
-                Growth-oriented.
-              </p>
-
-            </div>
-
-
-            <!-- Positive 2 -->
-
-            <div class="highlight-item positive">
-
-              <span class="highlight-icon">
-                ✓
-              </span>
-
-              <p>
-                A place where ambition<br>
-                and devotion coexist.
-              </p>
-
-            </div>
-
-
-            <!-- Negative 1 -->
-
-            <div class="highlight-item negative">
-
-              <span class="highlight-icon">
-                ×
-              </span>
-
-              <p>
-                Not<br>
-                compulsory-heavy.
-              </p>
-
-            </div>
-
-
-            <!-- Negative 2 -->
-
-            <div class="highlight-item negative">
-
-              <span class="highlight-icon">
-                ×
-              </span>
-
-              <p>
-                Not<br>
-                attendance-policed.
-              </p>
-
-            </div>
-
-
-            <!-- Negative 3 -->
-
-            <div class="highlight-item negative">
-
-              <span class="highlight-icon">
-                ×
-              </span>
-
-              <p>
-                Not emotionally<br>
-                overwhelming.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<script>
-  (function(){
-    var btn = document.querySelector('.membership-toggle');
-    var benefits = document.querySelector('.membership-benefits');
-    if(!btn || !benefits) return;
-    btn.addEventListener('click', function(){
-      var expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      benefits.classList.toggle('open');
-      btn.textContent = expanded ? 'View benefits' : 'Hide benefits';
-      if(!expanded){ benefits.scrollIntoView({behavior:'smooth', block:'start'}); }
-    });
-  })();
-</script>
-
-<!-- Governance & Hosted By -->
-  <section class="section" id="contact">
+  <!-- Governance & Hosted By -->
+  <section class="section" id="contact" style="padding-bottom: 0 !important; margin-bottom: 0 !important;">
     <div class="container governance-section animate-fade-up">
-      <h2 class="text-serif" style="color: var(--color-primary); font-size: 2.5rem;">Governance Structure</h2>
-      <p style="font-size: 1.15rem; color: var(--color-text-muted); margin-bottom: 3rem;">Unnati runs systemically—not personality-based. Guided by structured leadership.</p>
+      <h2 class="text-serif" style="color: var(--color-primary); font-size: clamp(2rem, 4vw, 2.5rem);">Governance Structure</h2>
+      <p style="font-size: 1.15rem; color: var(--color-text-muted); margin-bottom: 2rem;">Unnati runs systemically—not personality-based. Guided by structured leadership.</p>
       
-      <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 3rem;">
-        
-        <!-- Vision Head Card -->
-        <div class="glass-panel" style="padding: 2.5rem 2rem; flex: 1; min-width: 280px; max-width: 450px; text-align: center; display: flex; flex-direction: column; align-items: center; box-shadow: var(--shadow-md);">
+      <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+        <div class="glass-panel" style="padding: 2.2rem 1.5rem; flex: 1 1 280px; max-width: 450px; text-align: center; display: flex; flex-direction: column; align-items: center; box-shadow: var(--shadow-md);">
           <div style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; border: 3px solid var(--color-accent); margin-bottom: 1.5rem; box-shadow: var(--shadow-sm); flex-shrink: 0;">
             <img src="images/pillar/sukirti_madhavi.jpeg" alt="Sukirti Madhavi DD" style="width: 100%; height: 100%; object-fit: cover;">
           </div>
@@ -697,8 +429,7 @@
           <p style="font-size: 0.95rem; color: var(--color-text-muted); line-height: 1.6; margin: 0;">Vision direction, monthly workshop leadership, and mentoring of team leads.</p>
         </div>
 
-        <!-- Core Team Card -->
-        <div class="glass-panel" style="padding: 2.5rem 2rem; flex: 1; min-width: 280px; max-width: 450px; text-align: center; display: flex; flex-direction: column; align-items: center; box-shadow: var(--shadow-md);">
+        <div class="glass-panel" style="padding: 2.2rem 1.5rem; flex: 1 1 280px; max-width: 450px; text-align: center; display: flex; flex-direction: column; align-items: center; box-shadow: var(--shadow-md);">
           <div style="width: 120px; height: 120px; border-radius: 50%; background: rgba(142, 26, 65, 0.04); border: 3px dashed rgba(142, 26, 65, 0.15); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 1.5rem; flex-shrink: 0; color: var(--color-primary);">
             👥
           </div>
@@ -706,14 +437,30 @@
           <p style="font-weight: 600; font-size: 1.25rem; margin-bottom: 0.8rem; color: var(--color-primary);">Trained Coordinators</p>
           <p style="font-size: 0.95rem; color: var(--color-text-muted); line-height: 1.6; margin: 0;">Each vertical has a designated Lead + 1 Assistant ensuring quality and structure.</p>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- Scripts for animations and mobile menu -->
+  <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-<script>
+  <script>
+    (function(){
+      var btn = document.querySelector('.membership-toggle');
+      var benefits = document.querySelector('.membership-benefits');
+      if(!btn || !benefits) return;
+      btn.addEventListener('click', function(){
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        benefits.classList.toggle('open');
+        btn.textContent = expanded ? 'View benefits' : 'Hide benefits';
+        if(!expanded){ 
+          setTimeout(function() {
+            benefits.scrollIntoView({behavior:'smooth', block:'start'}); 
+          }, 50);
+        }
+      });
+    })();
+
     function normalizeGoogleSheetCsvUrl(rawUrl) {
       if (!rawUrl) return null;
       const trimmed = String(rawUrl).trim();
@@ -726,18 +473,15 @@
       return `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
     }
 
-    // LIVE GOOGLE SHEET URL
     window.SHEET_CSV_URL = normalizeGoogleSheetCsvUrl('https://docs.google.com/spreadsheets/d/1mdEAT1Xu0vln4jwdyBnVGgx4LZyIL3dm6DnQJ9bWGeM/edit?usp=sharing');
     const SHEET_CSV_URL = window.SHEET_CSV_URL || null;
 
-    // FALLBACK DATA (Only used if the live sheet fails)
     const LOCAL_DUMMY_DATA = [
       { date: '2026-09-22', title: 'Local Sakhi Meetup', location: 'Chennai' }, 
       { date: '2026-09-28', title: 'Youth Masterclass', location: 'Online' },   
       { date: '2026-10-05', title: 'Kirtan Evening', location: 'Main Hall' }
     ];
 
-    // Helper to format dates coming from the Google Sheet
     function parseGoogleDate(s){
       if(!s) return null;
       s = String(s).trim();
@@ -754,7 +498,6 @@
       const today = new Date();
       today.setHours(0,0,0,0);
 
-      // Filter to ONLY show events that are today or in the future
       let upcomingEvents = dataArray.filter(ev => {
         if(!ev.date) return false;
         const d = new Date(ev.date + 'T00:00:00');
@@ -762,10 +505,7 @@
         return d.getTime() >= today.getTime(); 
       });
 
-      // Sort chronologically
       upcomingEvents.sort((a,b) => new Date(a.date) - new Date(b.date));
-      
-      // Slice out only the top 3 closest upcoming events
       const top3 = upcomingEvents.slice(0, 3);
       
       container.innerHTML = '';
@@ -775,7 +515,6 @@
         return;
       }
 
-      // Build the cards and make them clickable
       top3.forEach(ev => {
         const d = new Date(ev.date + 'T00:00:00');
         const day = String(d.getDate()).padStart(2,'0');
@@ -784,14 +523,11 @@
         const article = document.createElement('article');
         article.className = 'event-item';
         article.setAttribute('tabindex', '0');
-
-        // MAKE IT CLICKABLE: Change cursor and add navigation
         article.style.cursor = 'pointer';
         article.addEventListener('click', () => {
           window.location.href = 'events.html#upcoming-events';
         });
         
-        // ACCESSIBILITY: Allow users to hit 'Enter' to navigate
         article.addEventListener('keypress', (e) => {
           if (e.key === 'Enter') {
             window.location.href = 'events.html#upcoming-events';
@@ -819,7 +555,6 @@
         return;
       }
 
-      // Fetch and parse the live Google Sheet
       Papa.parse(SHEET_CSV_URL, {
         download: true,
         header: true,
@@ -850,7 +585,6 @@
 
     loadEvents();
 
-    // Mobile Menu Toggle
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navLinks = document.querySelector('.nav-links');
 
@@ -861,7 +595,6 @@
       });
     }
 
-    // Scroll Animation Observer
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -874,7 +607,6 @@
       observer.observe(el);
     });
 
-    // Pillars Slider Controller
     const sliderTrack = document.querySelector('.pillars-slider-track');
     const slides = document.querySelectorAll('.pillar-slide');
     const prevBtn = document.querySelector('.pillars-slider-btn.prev');
@@ -966,9 +698,8 @@
   <div id="site-footer"></div>
 
   <script src="https://unpkg.com/lucide@latest"></script>
-
-<script>
-  lucide.createIcons();
-</script>
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>
