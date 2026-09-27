@@ -404,6 +404,7 @@ p {
   margin-bottom: 2rem;
 }
 
+/* Portrait Card: Maintains a centered 3:4 aspect-ratio to prevent extreme crop */
 .portrait-card {
   position: relative;
   background: linear-gradient(180deg, rgba(145, 90, 57, 0.26), rgba(87, 30, 41, 0.9));
@@ -418,7 +419,7 @@ p {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(122, 72, 40, 0.12), rgba(62, 19, 29, 0.74));
+  background: linear-gradient(180deg, rgba(122, 72, 40, 0.08), rgba(62, 19, 29, 0.65));
   z-index: 1;
 }
 
@@ -775,7 +776,6 @@ p {
 
 .hero {
   position: relative;
-  /* Min 600px, preferred 88vh, max 780px on desktop so portrait monitors don't stretch */
   min-height: clamp(600px, 85vh, 780px);
   display: flex;
   align-items: center;
@@ -785,7 +785,6 @@ p {
   width: 100%;
 }
 
-/* Portrait tablets safeguard (iPad Pro 13, iPad Air, Surface portrait) */
 @media (orientation: portrait) and (min-width: 769px) {
   .hero {
     min-height: auto !important;
@@ -1417,7 +1416,7 @@ p {
 
 @media (min-width: 1024px) {
   .membership-showcase {
-    grid-template-columns: 37% minmax(0, 63%) !important; /* Balanced left intro and right benefits */
+    grid-template-columns: 37% minmax(0, 63%) !important;
   }
 }
 
@@ -1614,7 +1613,6 @@ p {
   text-align: center;
 }
 
-/* 6-Column Layout with 2-unit and 3-unit spans to prevent gaps */
 .benefits-grid {
   display: grid !important;
   grid-template-columns: repeat(6, 1fr) !important;
@@ -1624,8 +1622,8 @@ p {
 }
 
 .benefit-card {
-  grid-column: span 2; /* 3 cards in Row 1 and Row 2 */
-  min-height: 125px !important; /* Proportional height matching left column */
+  grid-column: span 2;
+  min-height: 125px !important;
   padding: 0.95rem 0.85rem !important;
   display: flex !important;
   flex-direction: column !important;
@@ -1639,7 +1637,6 @@ p {
   transition: transform 0.22s ease, box-shadow 0.22s ease !important;
 }
 
-/* The last two cards split the bottom row evenly */
 .benefit-card:nth-child(7),
 .benefit-card:nth-child(8) {
   grid-column: span 3;
@@ -2022,7 +2019,7 @@ div[id].grid-3::before,
   }
 }
 
-/* Medium Tablets & iPads (<= 1050px, specifically includes iPad Pro 13 @ 1032px) */
+/* Medium Tablets & iPads (<= 1050px) */
 @media (max-width: 1050px) {
   .hero {
     min-height: auto !important;
@@ -2051,14 +2048,13 @@ div[id].grid-3::before,
 
   .inspiration-layout {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
   }
 
   .timeline-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  /* Tablets switch to 2 columns */
   .benefits-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 0.9rem !important;
@@ -2198,7 +2194,6 @@ div[id].grid-3::before,
     grid-template-columns: 1fr;
   }
 
-  /* Single column on mobile phones */
   .benefits-grid {
     grid-template-columns: 1fr !important;
     gap: 0.8rem !important;

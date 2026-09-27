@@ -327,7 +327,7 @@
             </div>
 
             <!-- 6: Blush -->
-            <div class="benefit-card card-blush">
+            <div class="benefit-card card-award">
               <div class="benefit-icon-badge">
                 <i data-lucide="award"></i>
               </div>
@@ -363,9 +363,7 @@
             <span class="heading-star">✦</span>
           </div>
 
-          <!-- Inset Dual-Column Box -->
           <div class="highlights-card-inner">
-            <!-- Left: What we embrace -->
             <div class="highlights-col">
               <div class="pill-badge pill-embrace">
                 <span class="pill-icon"><i data-lucide="sprout"></i></span>
@@ -385,7 +383,6 @@
 
             <div class="highlights-divider"></div>
 
-            <!-- Right: What we avoid -->
             <div class="highlights-col">
               <div class="pill-badge pill-avoid">
                 <span class="pill-icon"><i data-lucide="ban"></i></span>
@@ -463,17 +460,28 @@
 
     function normalizeGoogleSheetCsvUrl(rawUrl) {
       if (!rawUrl) return null;
-      const trimmed = String(rawUrl).trim();
-      if (!trimmed) return null;
+      let url = String(rawUrl).trim();
 
-      const match = trimmed.match(/docs\.google\.com\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/i);
-      if (!match) return trimmed;
+      if (url.includes('/pubhtml')) {
+        return url.replace(/\/pubhtml.*$/, '/pub?output=csv');
+      }
+      if (url.includes('/pub') && !url.includes('output=csv')) {
+        return url + (url.includes('?') ? '&output=csv' : '?output=csv');
+      }
+      if (url.includes('/pub?output=csv')) {
+        return url;
+      }
 
-      const sheetId = match[1];
-      return `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
+      const match = url.match(/docs\.google\.com\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/i);
+      if (match) {
+        return `https://docs.google.com/spreadsheets/d/${match[1]}/gviz/tq?tqx=out:csv`;
+      }
+
+      return url;
     }
 
-    window.SHEET_CSV_URL = normalizeGoogleSheetCsvUrl('https://docs.google.com/spreadsheets/d/1mdEAT1Xu0vln4jwdyBnVGgx4LZyIL3dm6DnQJ9bWGeM/edit?usp=sharing');
+    // Connects directly to the active published Google Sheet
+    window.SHEET_CSV_URL = normalizeGoogleSheetCsvUrl('https://docs.google.com/spreadsheets/d/e/2PACX-1vQPMjE0d5cPAACn03wxaM-RTXNxcW-JtNdj0r8aBMDyE2zpOjyDBxzA1rDL9ZUzdro6U-9kHxd0sgyg/pub?output=csv');
     const SHEET_CSV_URL = window.SHEET_CSV_URL || null;
 
     const LOCAL_DUMMY_DATA = [
@@ -486,8 +494,34 @@
       if(!s) return null;
       s = String(s).trim();
       if(/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+
       let m = s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
-      if(m) return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;
+      if(m){
+        let p1 = parseInt(m[1], 10);
+        let p2 = parseInt(m[2], 10);
+        const yyyy = m[3];
+
+        let day, month;
+        if(p1 > 12) {
+          day = p1;
+          month = p2;
+        } else if (p2 > 12) {
+          month = p1;
+          day = p2;
+        } else {
+          day = p1;
+          month = p2;
+        }
+        return `${yyyy}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+      }
+
+      const dt = new Date(s);
+      if(!isNaN(dt.getTime())){
+        const yyyy = dt.getFullYear();
+        const mm = String(dt.getMonth() + 1).padStart(2, '0');
+        const dd = String(dt.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+      }
       return null;
     }
 
@@ -495,17 +529,23 @@
       const container = document.getElementById('upcoming-list');
       if (!container) return;
 
-      const today = new Date();
-      today.setHours(0,0,0,0);
+      const now = new Date();
+      // Normalized to midnight
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+      // 30-day (1 month) limit window matching events.js
+      const limitDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 30).getTime();
 
       let upcomingEvents = dataArray.filter(ev => {
         if(!ev.date) return false;
-        const d = new Date(ev.date + 'T00:00:00');
-        d.setHours(0,0,0,0);
-        return d.getTime() >= today.getTime(); 
+        const parts = ev.date.split('-');
+        if(parts.length !== 3) return false;
+        const eventTime = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10)).getTime();
+        
+        // Only include events within the next 30 days
+        return eventTime >= today && eventTime <= limitDate; 
       });
 
-      upcomingEvents.sort((a,b) => new Date(a.date) - new Date(b.date));
+      upcomingEvents.sort((a,b) => new Date(a.date.replace(/-/g, '/')) - new Date(b.date.replace(/-/g, '/')));
       const top3 = upcomingEvents.slice(0, 3);
       
       container.innerHTML = '';
@@ -516,9 +556,10 @@
       }
 
       top3.forEach(ev => {
-        const d = new Date(ev.date + 'T00:00:00');
+        const parts = ev.date.split('-');
+        const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
         const day = String(d.getDate()).padStart(2,'0');
-        const month = d.toLocaleString(undefined, { month: 'short' });
+        const month = d.toLocaleString('en-US', { month: 'short' });
 
         const article = document.createElement('article');
         article.className = 'event-item';
@@ -555,7 +596,8 @@
         return;
       }
 
-      Papa.parse(SHEET_CSV_URL, {
+      const separator = SHEET_CSV_URL.includes('?') ? '&' : '?';
+      Papa.parse(`${SHEET_CSV_URL}${separator}_=${Date.now()}`, {
         download: true,
         header: true,
         skipEmptyLines: 'greedy',
@@ -568,10 +610,10 @@
               });
               return normalized;
             })
-            .filter(r => r['Event Name'] || r['Event Date'])
+            .filter(r => r['Event Name'] || r['Event Date'] || r.title)
             .map(r => ({
-              date: parseGoogleDate(r['Event Date'] || r.date || ''),
-              title: r['Event Name'] || r.title || '',
+              date: parseGoogleDate(r['Event Date'] || r['event date'] || r.date || r['Date'] || ''),
+              title: r['Event Name'] || r['event name'] || r.title || '',
               location: r['Location'] || r.location || ''
             }));
           renderCards(formattedData);

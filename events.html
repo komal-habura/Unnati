@@ -37,7 +37,6 @@
       </div>
     </section>
 
-
     <section id="past-events" class="section event-section">
       <div class="container">
         <div class="section-title">
@@ -60,17 +59,30 @@
   <script>
     function normalizeGoogleSheetCsvUrl(rawUrl) {
       if (!rawUrl) return null;
-      const trimmed = String(rawUrl).trim();
-      if (!trimmed) return null;
+      let url = String(rawUrl).trim();
 
-      const match = trimmed.match(/docs\.google\.com\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/i);
-      if (!match) return trimmed;
+      // Convert pubhtml or pub links into direct CSV download
+      if (url.includes('/pubhtml')) {
+        return url.replace(/\/pubhtml.*$/, '/pub?output=csv');
+      }
+      if (url.includes('/pub') && !url.includes('output=csv')) {
+        return url + (url.includes('?') ? '&output=csv' : '?output=csv');
+      }
+      if (url.includes('/pub?output=csv')) {
+        return url;
+      }
 
-      const sheetId = match[1];
-      return `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
+      // Fallback for regular sheet URLs
+      const match = url.match(/docs\.google\.com\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/i);
+      if (match) {
+        return `https://docs.google.com/spreadsheets/d/${match[1]}/gviz/tq?tqx=out:csv`;
+      }
+
+      return url;
     }
 
-    window.SHEET_CSV_URL = normalizeGoogleSheetCsvUrl('https://docs.google.com/spreadsheets/d/1mdEAT1Xu0vln4jwdyBnVGgx4LZyIL3dm6DnQJ9bWGeM/edit?usp=sharing');
+    // Connects directly to your published Google Sheet
+    window.SHEET_CSV_URL = normalizeGoogleSheetCsvUrl('https://docs.google.com/spreadsheets/d/e/2PACX-1vQPMjE0d5cPAACn03wxaM-RTXNxcW-JtNdj0r8aBMDyE2zpOjyDBxzA1rDL9ZUzdro6U-9kHxd0sgyg/pub?output=csv');
   </script>
   <script src="events.js"></script>
   <script src="loader.js"></script>
@@ -80,9 +92,7 @@
         var upcoming = document.querySelector('.events-sidebar .upcoming-card');
         var feature = document.querySelector('.feature-card');
         if(!upcoming || !feature) return;
-        // reset any inline min-height first
         feature.style.minHeight = '';
-        // measure after paint
         var h = Math.ceil(upcoming.getBoundingClientRect().height);
         feature.style.minHeight = h + 'px';
       }
@@ -98,9 +108,7 @@
         clearTimeout(window._evtResizeTimer);
         window._evtResizeTimer = setTimeout(schedule, 120);
       });
-      // run after fonts/images
       if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule).catch(schedule); }
-      // also attempt shortly after load
       setTimeout(schedule, 400);
     })();
   </script>
